@@ -17,30 +17,33 @@ function enviarPedido(event) {
   event.preventDefault();
 
   const nombre = document.getElementById("nombre").value.trim();
-  const muza4 = document.getElementById("muza4").value;
   const muza8 = document.getElementById("muza8").value;
-  const napo4 = document.getElementById("napo4").value;
   const napo8 = document.getElementById("napo8").value;
+  const mitadmitad = document.getElementById("mitadmitad").value;
 
-  let mensaje = `¡Hola! Quiero hacer un pedido de Mc Pizza.%0A`;
-  if (nombre) mensaje += `Mi nombre es: ${nombre}.%0A`;
-
-  if (muza4 !== "0") mensaje += `- ${muza4} Mozzarella 4 porciones ($3.500 c/u)%0A`;
-  if (muza8 !== "0") mensaje += `- ${muza8} Mozzarella 8 porciones ($7.000 c/u)%0A`;
-  if (napo4 !== "0") mensaje += `- ${napo4} Napolitana 4 porciones ($4.000 c/u)%0A`;
-  if (napo8 !== "0") mensaje += `- ${napo8} Napolitana 8 porciones ($7.500 c/u)%0A`;
-
-  if (
-    muza4 === "0" &&
-    muza8 === "0" &&
-    napo4 === "0" &&
-    napo8 === "0"
-  ) {
+  if (muza8 === "0" && napo8 === "0" && mitadmitad === "0") {
     alert("Seleccioná al menos una pizza para continuar.");
     return;
   }
 
+  let mensaje = `¡Hola! Quiero hacer un pedido de Mc Pizza. `;
+  if (nombre) {
+    mensaje += `Mi nombre es: ${nombre}. `;
+  }
+
+  if (muza8 !== "0") {
+    mensaje += `- ${muza8} Mozzarella de 8 porciones ($7.000 c/u). `;
+  }
+
+  if (napo8 !== "0") {
+    mensaje += `- ${napo8} Napolitana de 8 porciones ($7.500 c/u). `;
+  }
+
+  if (mitadmitad !== "0") {
+    mensaje += `- ${mitadmitad} Mitad Mozzarella / Mitad Napolitana ($7.500 c/u). `;
+  }
+
   const telefono = "5493764217476";
-  const url = `https://wa.me/${telefono}?text=${mensaje}`;
+  const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, "_blank");
 }
