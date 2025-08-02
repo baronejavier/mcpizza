@@ -52,7 +52,7 @@ function enviarPedido(event) {
   if (totalPizzas >= 2) {
     mensaje += `¡Con envío GRATIS por pedir 2 o más pizzas! 🎉`;
   } else {
-    mensaje += ``;
+    mensaje += `(Envío gratis comprando 2 o más pizzas).`;
   }
 
   const telefono = "5493764217476";
