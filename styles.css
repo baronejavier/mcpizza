@@ -152,7 +152,7 @@ footer {
   max-width: 800px;
   margin: auto;
   font-size: 1.1rem;
-  color: #ccc;
+  color: #fffb02;
   text-align: center;
 }
 
@@ -268,4 +268,18 @@ input[type="text"] {
   text-indent: -9999px; /* Oculta el texto del botón */
   cursor: pointer;
   background-position: center; /* Posición centrada de la imagen */
+}
+
+select {
+  background-color: #ffe6cc; /* color de fondo del selector */
+  color: #000; /* color del texto */
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* En algunos navegadores como Firefox también podés aplicar estilo a las opciones */
+select option {
+  background-color: #fffbe6; /* color de fondo de cada opción */
+  color: #000;
 }

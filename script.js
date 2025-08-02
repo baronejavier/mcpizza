@@ -43,6 +43,18 @@ function enviarPedido(event) {
     mensaje += `- ${mitadmitad} Mitad Mozzarella / Mitad Napolitana ($7.500 c/u). `;
   }
 
+  // Sumar la cantidad total de pizzas
+  const totalPizzas = 
+    (muza8 === "+3" ? 4 : parseInt(muza8)) +
+    (napo8 === "+3" ? 4 : parseInt(napo8)) +
+    (mitadmitad === "+3" ? 4 : parseInt(mitadmitad));
+
+  if (totalPizzas >= 2) {
+    mensaje += `¡Con envío GRATIS por pedir 2 o más pizzas! 🎉`;
+  } else {
+    mensaje += ``;
+  }
+
   const telefono = "5493764217476";
   const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, "_blank");
