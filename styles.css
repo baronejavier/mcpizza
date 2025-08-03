@@ -35,8 +35,8 @@ header h1 {
 
 header p {
   color: #e0e0e0;
-  margin-top: 1.5rem;
   font-style: italic;
+  font-size: 1.5rem;
 }
 
 .header .tagline {

@@ -20,6 +20,9 @@ function enviarPedido(event) {
   const muza8 = document.getElementById("muza8").value;
   const napo8 = document.getElementById("napo8").value;
   const mitadmitad = document.getElementById("mitadmitad").value;
+  const sierra = document.getElementById("sierra").value;
+  const lata = document.getElementById("lata").value;
+  const c361 = document.getElementById("c361").value;
 
   if (muza8 === "0" && napo8 === "0" && mitadmitad === "0") {
     alert("Seleccioná al menos una pizza para continuar.");
@@ -36,11 +39,23 @@ function enviarPedido(event) {
   }
 
   if (napo8 !== "0") {
-    mensaje += `- ${napo8} Napolitana de 8 porciones ($7.500 c/u). `;
+    mensaje += `- ${napo8} Napolitana de 8 porciones ($8.500 c/u). `;
   }
 
   if (mitadmitad !== "0") {
-    mensaje += `- ${mitadmitad} Mitad Mozzarella / Mitad Napolitana ($7.500 c/u). `;
+    mensaje += `- ${mitadmitad} Mitad Mozzarella / Mitad Napolitana ($8.000 c/u). `;
+  }
+
+  if (sierra !== "0") {
+    mensaje += `- ${sierra} Sierra de los Padres 2.25 L ($3.000 c/u). `;
+  }
+
+  if (lata !== "0") {
+    mensaje += `- ${lata} Cerveza Heineken 473 mL ($2.500 c/u). `;
+  }
+
+  if (c361 !== "0") {
+    mensaje += `- ${c361} Cerveza 361 1.5 L ($3.000 c/u). `;
   }
 
   // Sumar la cantidad total de pizzas
