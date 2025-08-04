@@ -46,18 +46,6 @@ function enviarPedido(event) {
     mensaje += `- ${mitadmitad} Mitad Mozzarella / Mitad Napolitana ($8.000 c/u). `;
   }
 
-  if (sierra !== "0") {
-    mensaje += `- ${sierra} Sierra de los Padres 2.25 L ($3.000 c/u). `;
-  }
-
-  if (lata !== "0") {
-    mensaje += `- ${lata} Cerveza Heineken 473 mL ($2.500 c/u). `;
-  }
-
-  if (c361 !== "0") {
-    mensaje += `- ${c361} Cerveza 361 1.5 L ($3.000 c/u). `;
-  }
-
   // Sumar la cantidad total de pizzas
   const totalPizzas = 
     (muza8 === "+3" ? 4 : parseInt(muza8)) +
