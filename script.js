@@ -23,6 +23,9 @@ function enviarPedido(event) {
   const sierra = document.getElementById("sierra").value;
   const lata = document.getElementById("lata").value;
   const c361 = document.getElementById("c361").value;
+  const agua = document.getElementById("agua").value;
+  const vino = document.getElementById("vino").value;
+  const secco = document.getElementById("secco").value;
 
   if (muza8 === "0" && napo8 === "0" && mitadmitad === "0") {
     alert("Seleccioná al menos una pizza para continuar.");
@@ -56,6 +59,18 @@ function enviarPedido(event) {
 
   if (c361 !== "0") {
     mensaje += `- ${c361} Cerveza 361 1.5 L ($3.000 c/u). `;
+  }
+
+  if (agua !== "0") {
+    mensaje += `- ${agua} Agua Benedictino 3 L ($2.000 c/u). `;
+  }
+
+  if (vino !== "0") {
+    mensaje += `- ${vino} Vino Canciller 1125 mL ($3.500 c/u). `;
+  }
+
+  if (secco !== "0") {
+    mensaje += `- ${secco} Gaseosa Secco 3L ($2.000 c/u). `;
   }
 
   // Sumar la cantidad total de pizzas
