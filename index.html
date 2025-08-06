@@ -33,15 +33,25 @@
         <img src="img/muza.png" alt="Pizza Mozzarella" />
         <h3>Pizza Mozzarella</h3>
         <p>Con salsa de tomate, queso mozzarella, aceitunas y orégano.</p>
-        <p class="info">4 porciones ..........<z>$3.500</z></p>
         <p class="info">8 porciones ..........<z>$7.000</z></p>
       </div>
       <div class="pizza-card">
         <img src="img/napo.png" alt="Pizza Napolitana con Jamón y Queso" />
         <h3>Pizza Napolitana con Jamón</h3>
         <p>Con salsa de tomate, queso, jamón, aceitunas y orégano.</p>
-        <p class="info">4 porciones ..........<z>$4.500</z></p>
         <p class="info">8 porciones ..........<z>$8.500</z></p>
+      </div>
+      <div class="pizza-card">
+        <img src="img/fugazzeta.png" alt="Pizza Fugazzeta" />
+        <h3>Pizza Fugazzeta</h3>
+        <p>Con salsa de tomate, queso, cebolla, aceitunas y orégano.</p>
+        <p class="info">8 porciones ..........<z>$8.000</z></p>
+      </div>
+      <div class="pizza-card">
+        <img src="img/calabresa.png" alt="Pizza Calabresa" />
+        <h3>Pizza Calabresa</h3>
+        <p>Con salsa de tomate, queso, longaniza calabresa, aceitunas y orégano.</p>
+        <p class="info">8 porciones ..........<z>$9.500</z></p>
       </div>
       <div class="pizza-card">
         <img src="img/Sierra de los padres.png" alt="Agua saborizada" />
@@ -53,7 +63,13 @@
         <img src="img/Latas.png" alt="Cerveza en lata" />
         <h3>Cerveza en lata</h3>
         <p>Cerveza en lata Heineken.</p>
-        <p class="info">473 mL ..........<z>$2.500</z></p>
+        <p class="info">473 mL ..........<z>$3.500</z></p>
+      </div>
+      <div class="pizza-card">
+        <img src="img/lata brahma.png" alt="Cerveza en lata" />
+        <h3>Cerveza en lata</h3>
+        <p>Cerveza en lata Brahma.</p>
+        <p class="info">473 mL ..........<z>$1.800</z></p>
       </div>
       <div class="pizza-card">
         <img src="img/361.png" alt="Cerveza en botella" />
@@ -125,7 +141,25 @@
       <option value="+3">Más de 3</option>
     </select>
 
-    <label for="mitadmitad">Mitad Mozzarella / Mitad Napolitana ($8.000):</label>
+    <label for="fuga">Fugazzeta de 8 porciones ($8.000):</label>
+    <select id="fuga" name="fuga">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="+3">Más de 3</option>
+    </select>
+
+    <label for="cala">Calabresa de 8 porciones ($9.500):</label>
+    <select id="cala" name="cala">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="+3">Más de 3</option>
+    </select>
+
+    <label for="mitadmitad">Mitad Mozzarella / Mitad Especial ($8.500):</label>
     <select id="mitadmitad" name="mitadmitad">
       <option value="0">0</option>
       <option value="1">1</option>
@@ -145,7 +179,16 @@
       <option value="+3">Más de 3</option>
     </select>
 
-    <label for="lata">Cerveza Heineken 473 mL ($2.500):</label>
+    <label for="lata">Cerveza Heineken 473 mL ($3.500):</label>
+    <select id="lata" name="lata">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="+3">Más de 3</option>
+    </select>
+
+    <label for="lata">Cerveza Brahma 473 mL ($1.800):</label>
     <select id="lata" name="lata">
       <option value="0">0</option>
       <option value="1">1</option>
