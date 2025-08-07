@@ -23,7 +23,7 @@ function enviarPedido(event) {
   const napo8 = document.getElementById("napo8").value;
   const fuga = document.getElementById("fuga").value;
   const cala = document.getElementById("cala").value;
-  const mitadmitad = document.getElementById("mitadmitad").value;
+  const rucula = document.getElementById("rucula").value;
   const sierra = document.getElementById("sierra").value;
   const lata = document.getElementById("lata").value;
   const brahma = document.getElementById("brahma").value;
@@ -32,7 +32,7 @@ function enviarPedido(event) {
   const vino = document.getElementById("vino").value;
   const secco = document.getElementById("secco").value;
 
-  if (muza8 === "0" && napo8 === "0" && fuga === "0" && cala === "0" && mitadmitad === "0") {
+  if (muza8 === "0" && napo8 === "0" && fuga === "0" && cala === "0" && rucula === "0") {
     alert("Seleccioná al menos una pizza para continuar.");
     return;
   }
@@ -58,8 +58,8 @@ function enviarPedido(event) {
     mensaje += `- ${cala} Calabresa de 8 porciones ($9.500 c/u). `;
   }
 
-  if (mitadmitad !== "0") {
-    mensaje += `- ${mitadmitad} Mitad Mozzarella / Mitad Napolitana ($8.000 c/u). `;
+  if (rucula !== "0") {
+    mensaje += `- ${rucula} Rúcula de 8 porciones ($8.000 c/u). `;
   }
 
   if (sierra !== "0") {
@@ -96,7 +96,7 @@ function enviarPedido(event) {
     (napo8 === "+3" ? 4 : parseInt(napo8)) +
     (fuga === "+3" ? 4 : parseInt(fuga)) +
     (cala === "+3" ? 4 : parseInt(cala)) +
-    (mitadmitad === "+3" ? 4 : parseInt(mitadmitad));
+    (rucula === "+3" ? 4 : parseInt(rucula));
 
   if (totalPizzas >= 2) {
     mensaje += `¡Con envío GRATIS por pedir 2 o más pizzas! 🎉`;

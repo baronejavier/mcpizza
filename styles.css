@@ -14,11 +14,11 @@ a {
 
 /* Encabezado */
 header {
-  background-color: #1c1c1c;
   padding: 1.5rem;
   text-align: center;
   border-bottom: 2px solid #e63946;
-  background-image: url(img/portada.jpeg);
+  background-image: url(img/portada.jpg);
+  background-size: cover;
   background-position: center;
   text-shadow: 
   1px 1px 2px #000,
