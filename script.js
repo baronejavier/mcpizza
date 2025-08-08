@@ -98,10 +98,9 @@ function enviarPedido(event) {
     (cala === "+3" ? 4 : parseInt(cala)) +
     (rucula === "+3" ? 4 : parseInt(rucula));
 
-  if (totalPizzas >= 2) {
-    mensaje += `¡Con envío GRATIS por pedir 2 o más pizzas! 🎉`;
+  if (totalPizzas >= 3) {
+    mensaje += `¡Con envío GRATIS por pedir 3 o más pizzas! 🎉`;
   } else {
-    mensaje += `(Envío gratis comprando 2 o más pizzas).`;
   }
 
   const telefono = "5493764217476";
