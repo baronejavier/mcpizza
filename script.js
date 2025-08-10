@@ -24,6 +24,7 @@ function enviarPedido(event) {
   const fuga = document.getElementById("fuga").value;
   const cala = document.getElementById("cala").value;
   const rucula = document.getElementById("rucula").value;
+  const coca = document.getElementById("coca").value;
   const sierra = document.getElementById("sierra").value;
   const lata = document.getElementById("lata").value;
   const brahma = document.getElementById("brahma").value;
@@ -60,6 +61,10 @@ function enviarPedido(event) {
 
   if (rucula !== "0") {
     mensaje += `- ${rucula} Rúcula de 8 porciones ($8.000 c/u). `;
+  }
+
+  if (coca !== "0") {
+    mensaje += `- ${coca} Coca Cola de 1.5 L ($3.800 c/u). `;
   }
 
   if (sierra !== "0") {
