@@ -148,12 +148,61 @@ footer {
   }
 }
 
-.contacto p {
-  max-width: 800px;
-  margin: auto;
-  font-size: 1.1rem;
-  color: #fffb02;
+.contacto {
   text-align: center;
+  padding: 40px 20px;
+}
+
+.contacto h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.opciones-contacto {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.opcion {
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 280px;
+  border: 3px solid orange;
+}
+
+.opcion h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.btn-whatsapp, .btn-pedidosya {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-whatsapp {
+  background-color: #25D366;
+}
+
+.btn-whatsapp:hover {
+  background-color: #1ebe5b;
+}
+
+.btn-pedidosya {
+  background-color: #e60023;
+}
+
+.btn-pedidosya:hover {
+  background-color: #c5001e;
 }
 
 nav {
@@ -190,70 +239,6 @@ nav a:hover {
     text-align: center;
     margin: 5px 0;
   }
-}
-
-form {
-  background: #1f1f1f;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 600px;
-  margin: auto;
-  color: #fff;
-}
-
-fieldset {
-  border: none;
-  margin-bottom: 20px;
-}
-
-.pizza-opcion {
-  margin-bottom: 20px;
-}
-
-label {
-  background: #333;
-  color: #fff;
-  padding: 6px 12px;
-  margin: 4px;
-  display: inline-block;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-input[type="radio"] {
-  display: none;
-}
-
-input[type="radio"]:checked + label,
-label input[type="radio"]:checked {
-  background: #ff9900;
-  color: #000;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: none;
-  margin-top: 8px;
-  margin-bottom: 12px;
-}
-
-.btn-cta {
-  background-color: #ff3c00;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.btn-cta:hover {
-  background-color: #e62e00;
 }
 
 /* Estilos del botón flotante de WhatsApp */
