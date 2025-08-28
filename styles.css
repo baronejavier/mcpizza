@@ -286,6 +286,3 @@ select option {
     display: inline-block;
     transition: background 0.3s ease;
 }
-.btn-uber:hover {
-    background-color: #ff0000;
-}
