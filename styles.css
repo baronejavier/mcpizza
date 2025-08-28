@@ -274,3 +274,18 @@ select option {
   background-color: #fffbe6; /* color de fondo de cada opción */
   color: #000;
 }
+
+.btn-uber {
+    background-color: #000000;
+    color: white;
+    border: 3px solid rgb(255, 255, 255);
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: background 0.3s ease;
+}
+.btn-uber:hover {
+    background-color: #ff0000;
+}
