@@ -260,3 +260,54 @@ select option {
   background-color: #fffbe6; /* color de fondo de cada opción */
   color: #000;
 }
+
+.happy-hours {
+  background: linear-gradient(135deg, #fa0000, #fcbf49);
+  color: #fff;
+  text-align: center;
+  padding: 25px 15px;
+  margin: 0 auto 30px auto;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  max-width: 950px;
+  animation: pulse 3s infinite;
+}
+
+.happy-hours h2 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+}
+
+.happy-hours p {
+  font-size: 1.2rem;
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+.happy-hours .horario {
+  margin-top: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background: rgba(0,0,0,0.5);
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 10px;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+#contador {
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: rgba(0,0,0,0.3);
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}

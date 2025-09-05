@@ -16,32 +16,83 @@ window.addEventListener("load", mostrarSeccion);
 
 document.addEventListener("DOMContentLoaded", () => {
   const precios = document.querySelectorAll("z");
-  const ahora = new Date();
-  const hora = ahora.getHours();
-  const minutos = ahora.getMinutes();
+  const mensajeEl = document.getElementById("mensaje");
+  const contadorEl = document.getElementById("contador");
 
-  precios.forEach(precioEl => {
-    if (!precioEl.hasAttribute("data-precio")) {
-      let precioTexto = precioEl.textContent.replace("$", "").replace(/\./g, "");
-      let precioOriginal = parseInt(precioTexto);
-      precioEl.setAttribute("data-precio", precioOriginal);
-    }
+  const parsearPrecio = txt => {
+    const limpio = String(txt).replace(/[^\d]/g, "");
+    return limpio === "" ? NaN : parseInt(limpio, 10);
+  };
+  const formatear = n => "$" + n.toLocaleString("es-AR");
 
-    let precioBase = parseInt(precioEl.getAttribute("data-precio"));
-    if (isNaN(precioBase)) return;
+  function esHappyHour(h, m) {
+    return (h >= 20 && h <= 23) || (h === 0 && m <= 0);
+  }
 
-    let aplicarRecargo = false;
+  function segundosHasta(hActual, mActual, sActual, hTarget, mTarget, sTarget) {
+    const ahoraSeg = hActual*3600 + mActual*60 + sActual;
+    const targetSeg = hTarget*3600 + mTarget*60 + sTarget;
+    if (targetSeg >= ahoraSeg) return targetSeg - ahoraSeg;
+    return 24*3600 - ahoraSeg + targetSeg;
+  }
 
-    if ((hora === 0 && minutos >= 0) || (hora > 0 && hora < 8)) {
-      aplicarRecargo = true;
-    }
+  function actualizarPrecios() {
+    const ahora = new Date();
+    const h = ahora.getHours();
+    const m = ahora.getMinutes();
+    const inHH = esHappyHour(h, m);
 
-    if (aplicarRecargo) {
-      let nuevoPrecio = precioBase * 1.4;
-      nuevoPrecio = Math.ceil(nuevoPrecio / 500) * 500;
-      precioEl.textContent = "$" + nuevoPrecio.toLocaleString("es-AR");
+    precios.forEach(precioEl => {
+      if (!precioEl.hasAttribute("data-precio")) {
+        const precioOriginal = parsearPrecio(precioEl.textContent);
+        if (!isNaN(precioOriginal)) precioEl.setAttribute("data-precio", String(precioOriginal));
+      }
+
+      const precioBase = parseInt(precioEl.getAttribute("data-precio") || "", 10);
+      if (isNaN(precioBase)) return;
+
+      precioEl.innerHTML = "";
+
+      if (inHH) {
+    let aumento = Math.ceil((precioBase * 1.4) / 500) * 500;
+    precioEl.innerHTML = `<span style="text-decoration: line-through; opacity:0.7; margin-right:5px">${formatear(aumento)}</span><span style="font-weight:bold; color:#00ff00">${formatear(precioBase)}</span>`;
     } else {
-      precioEl.textContent = "$" + precioBase.toLocaleString("es-AR");
+    let nuevo = Math.ceil((precioBase * 1.4) / 500) * 500;
+    precioEl.textContent = formatear(nuevo);
     }
-  });
+    });
+   }
+
+  function actualizarContador() {
+    const ahora = new Date();
+    const h = ahora.getHours();
+    const m = ahora.getMinutes();
+    const s = ahora.getSeconds();
+    const inHH = esHappyHour(h, m);
+
+    if (mensajeEl && contadorEl) {
+      let segs, hh, mm, ss;
+
+      if (inHH) {
+        mensajeEl.textContent = "¡Estamos en Happy Hour! 🎉 Pedí ahora — precios especiales hasta las 00:00.";
+        segs = segundosHasta(h, m, s, 0, 0, 0);
+      } else {
+        mensajeEl.textContent = "⏳ El Happy Hour comienza todos los días a las 20:00. ¡No te lo pierdas!";
+        segs = segundosHasta(h, m, s, 20, 0, 0);
+      }
+
+      hh = Math.floor(segs / 3600);
+      mm = Math.floor((segs % 3600) / 60);
+      ss = segs % 60;
+
+      contadorEl.textContent = `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
+
+      if (segs <= 1) location.reload();
+    }
+  }
+
+  actualizarPrecios();
+  actualizarContador();
+  setInterval(actualizarPrecios, 60_000);
+  setInterval(actualizarContador, 1000);
 });
