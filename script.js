@@ -96,3 +96,52 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(actualizarPrecios, 60_000);
   setInterval(actualizarContador, 1000);
 });
+
+document.getElementById("verificarBtn").addEventListener("click", () => {
+  const codigoIngresado = document.getElementById("codigoInput").value.trim().toUpperCase();
+  const resultadoDiv = document.getElementById("resultado");
+
+  if (!codigoIngresado) {
+    resultadoDiv.textContent = "Por favor, ingresá un cupón.";
+    resultadoDiv.className = "resultado error";
+    return;
+  }
+
+  fetch("cupones.json")
+    .then(res => res.json())
+    .then(cupones => {
+      const cupon = cupones.find(c => c.codigo === codigoIngresado);
+
+      if (!cupon) {
+        resultadoDiv.textContent = "❌ Cupón no válido.";
+        resultadoDiv.className = "resultado error";
+        return;
+      }
+
+const hoy = new Date();
+hoy.setHours(0,0,0,0);
+
+const vence = new Date(cupon.vence);
+vence.setHours(0,0,0,0);
+
+const ultimoDiaValido = new Date(vence);
+ultimoDiaValido.setDate(ultimoDiaValido.getDate() + 1);
+
+if (hoy > ultimoDiaValido) {
+  resultadoDiv.textContent = "⚠️ Cupón vencido.";
+  resultadoDiv.className = "resultado error";
+  return;
+}
+      resultadoDiv.innerHTML = `
+        ✅ Cupón válido<br>
+        Descuento: <b>${cupon.descuento}</b><br>
+        Válido hasta: <b>${cupon.vence}</b><br>
+        Asociado a: <b>${cupon.whatsapp}</b>
+      `;
+      resultadoDiv.className = "resultado ok";
+    })
+    .catch(() => {
+      resultadoDiv.textContent = "Error al verificar cupones.";
+      resultadoDiv.className = "resultado error";
+    });
+});
