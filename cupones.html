@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administración de Cupones</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; color: #333; }
+  h1, h2 { color: #2c3e50; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+  table, th, td { border: 1px solid #aaa; }
+  th, td { padding: 10px; text-align: left; }
+  th { background-color: #3498db; color: white; }
+  .vencido { background-color: #f8d7da; }
+  form { margin-bottom: 30px; padding: 10px; background-color: #ecf0f1; border-radius: 8px; }
+  label { display: block; margin: 5px 0 2px; }
+  input[type="text"] { width: 200px; padding: 5px; margin-bottom: 10px; }
+  button { padding: 8px 15px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; }
+  button.copy-btn { margin-top: 10px; background-color: #2ecc71; }
+  #nuevoCupon { margin-top: 10px; font-weight: bold; color: #e74c3c; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+
+<h1>Administración de Cupones</h1>
+
+<h2>Generar nuevo cupón</h2>
+<form id="formCupon">
+  <label>Descuento en pesos (solo números)</label>
+  <input type="text" id="descuento" placeholder="Ej: 500" required>
+  <label>WhatsApp asociado</label>
+  <input type="text" id="whatsapp" placeholder="Ej: 5493764217476" required>
+  <button type="submit">Generar Cupón</button>
+</form>
+<p id="nuevoCupon"></p>
+
+<button class="copy-btn" id="copiarJSON">Copiar JSON completo</button>
+
+<h2>Todos los cupones</h2>
+<table id="tablaCupones">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Descuento</th>
+      <th>Emitido</th>
+      <th>Vence</th>
+      <th>WhatsApp</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+let cupones = [];
+
+function cargarCupones() {
+  fetch('cupones.json')
+    .then(res => res.json())
+    .then(data => {
+      cupones = data;
+      actualizarInterfaz();
+    })
+    .catch(err => console.error("Error cargando cupones:", err));
+}
+
+function actualizarInterfaz() {
+  const tbody = document.querySelector('#tablaCupones tbody');
+  tbody.innerHTML = '';
+  const hoy = new Date();
+  hoy.setHours(0,0,0,0);
+
+  cupones.forEach(c => {
+    const tr = document.createElement('tr');
+
+    const emitidoDate = new Date(c.emitido);
+    emitidoDate.setHours(0,0,0,0);
+
+    const venceDate = new Date(c.vence);
+    venceDate.setHours(0,0,0,0);
+
+    const ultimoDiaValido = new Date(venceDate);
+    ultimoDiaValido.setDate(ultimoDiaValido.getDate() + 1); // sumar un día
+    const estado = (hoy > ultimoDiaValido) ? 'vencido' : '';
+
+    tr.innerHTML = `
+      <td>${c.codigo}</td>
+      <td>${c.descuento}</td>
+      <td>${c.emitido}</td>
+      <td>${c.vence}</td>
+      <td>${c.whatsapp}</td>
+      <td class="${estado}">${estado}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function generarCodigo(length = 8) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i=0; i<length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
+document.getElementById('formCupon').addEventListener('submit', function(e){
+  e.preventDefault();
+  const descuentoNum = document.getElementById('descuento').value.trim();
+  const whatsapp = document.getElementById('whatsapp').value.trim();
+
+  if (!/^\d+$/.test(descuentoNum)) {
+    alert('Ingresá solo números para el descuento.');
+    return;
+  }
+
+  const descuentoFormateado = `$${descuentoNum} OFF`;
+  const codigo = generarCodigo();
+
+  const hoy = new Date();
+  const emitido = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+  const vence = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 7); // 7 días de validez, incluyendo hoy
+
+  const cup = {
+    codigo: codigo,
+    descuento: descuentoFormateado,
+    emitido: emitido.toISOString().slice(0,10),
+    vence: vence.toISOString().slice(0,10),
+    whatsapp: whatsapp
+  };
+
+  document.getElementById('nuevoCupon').textContent = 
+    `Cupón generado para agregar al JSON:\n${JSON.stringify(cup, null, 2)}`;
+
+  cupones.push(cup);
+  actualizarInterfaz();
+});
+
+document.getElementById('copiarJSON').addEventListener('click', function() {
+  const jsonStr = JSON.stringify(cupones, null, 2);
+  navigator.clipboard.writeText(jsonStr).then(() => {
+    alert('JSON completo copiado al portapapeles.');
+  }).catch(err => {
+    console.error('Error copiando JSON:', err);
+    alert('Error copiando JSON.');
+  });
+});
+
+cargarCupones();
+</script>
+
+</body>
+</html>
