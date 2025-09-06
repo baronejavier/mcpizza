@@ -107,9 +107,9 @@ document.getElementById("verificarBtn").addEventListener("click", () => {
     return;
   }
 
-  fetch("cupones.json")
-    .then(res => res.json())
-    .then(cupones => {
+  fetch("cupones.json?t=" + new Date().getTime(), { cache: "no-store" })
+  .then(res => res.json())
+  .then(cupones => {
       const cupon = cupones.find(c => c.codigo === codigoIngresado);
 
       if (!cupon) {

@@ -56,7 +56,9 @@
 let cupones = [];
 
 function cargarCupones() {
-  fetch('cupones.json')
+  fetch('cupones.json?t=' + new Date().getTime(), {
+    cache: "no-store"
+  })
     .then(res => res.json())
     .then(data => {
       cupones = data;
