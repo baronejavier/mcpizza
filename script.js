@@ -97,51 +97,37 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(actualizarContador, 1000);
 });
 
-document.getElementById("verificarBtn").addEventListener("click", () => {
-  const codigoIngresado = document.getElementById("codigoInput").value.trim().toUpperCase();
-  const resultadoDiv = document.getElementById("resultado");
+document.getElementById('consultarBtn').addEventListener('click', () => {
+  const input = document.getElementById('whatsappInput');
+  const numero = input.value.trim().replace(/\D/g,'');
+  const resultado = document.getElementById('resultado');
 
-  if (!codigoIngresado) {
-    resultadoDiv.textContent = "Por favor, ingresá un cupón.";
-    resultadoDiv.className = "resultado error";
+  if (!numero || numero.length < 6) {
+    resultado.textContent = "⚠️ Ingresá un número válido de WhatsApp.";
+    resultado.className = "puntos-resultado error";
     return;
   }
 
-  fetch("cupones.json?t=" + new Date().getTime(), { cache: "no-store" })
-  .then(res => res.json())
-  .then(cupones => {
-      const cupon = cupones.find(c => c.codigo === codigoIngresado);
+  fetch('puntos.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(res => res.json())
+    .then(data => {
+      const cliente = data.find(c => String(c.whatsapp).replace(/\D/g,'') === numero);
 
-      if (!cupon) {
-        resultadoDiv.textContent = "❌ Cupón no válido.";
-        resultadoDiv.className = "resultado error";
-        return;
+      if (cliente) {
+        if (cliente.puntos > 0) {
+          resultado.textContent = `✅ Tenés $${cliente.puntos} en puntos acumulados.`;
+          resultado.className = "puntos-resultado ok";
+        } else {
+          resultado.textContent = "ℹ️ Tenés $0 en puntos. ¡Sumá con tus próximas compras!";
+          resultado.className = "puntos-resultado warn";
+        }
+      } else {
+        resultado.textContent = "❌ No encontramos puntos asociados a este número.";
+        resultado.className = "puntos-resultado error";
       }
-
-const hoy = new Date();
-hoy.setHours(0,0,0,0);
-
-const vence = new Date(cupon.vence);
-vence.setHours(0,0,0,0);
-
-const ultimoDiaValido = new Date(vence);
-ultimoDiaValido.setDate(ultimoDiaValido.getDate() + 1);
-
-if (hoy > ultimoDiaValido) {
-  resultadoDiv.textContent = "⚠️ Cupón vencido.";
-  resultadoDiv.className = "resultado error";
-  return;
-}
-      resultadoDiv.innerHTML = `
-        ✅ Cupón válido<br>
-        Descuento: <b>${cupon.descuento}</b><br>
-        Válido hasta: <b>${cupon.vence}</b><br>
-        Asociado a: <b>${cupon.whatsapp}</b>
-      `;
-      resultadoDiv.className = "resultado ok";
     })
     .catch(() => {
-      resultadoDiv.textContent = "Error al verificar cupones.";
-      resultadoDiv.className = "resultado error";
+      resultado.textContent = "Error al consultar puntos.";
+      resultado.className = "puntos-resultado error";
     });
 });

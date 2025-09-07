@@ -23,7 +23,7 @@
     <p class="tagline">Sabores que cuentan historias</p>
     <nav>
       <a href="#menu">Menú</a>
-      <a href="#cupones">Cupones</a>
+      <a href="#puntos">Mc Puntos</a>
       <a href="#historia">Nuestra Historia</a>
       <a href="#contacto">Contacto</a>
     </nav>
@@ -41,14 +41,34 @@
   </div>
   </section>
 
-  <section id="cupones" class="cupones-section">
-  <h2>Verificar cupón</h2>
-  <div class="cupon-form">
-    <input type="text" id="codigoInput" placeholder="Ingresá tu cupón" />
-    <button id="verificarBtn">Verificar</button>
+<section id="puntos" class="puntos-section">
+  <div class="puntos-card">
+    <h2 class="puntos-titulo">Consultá tu saldo de puntos</h2>
+    <p class="puntos-subtitulo">Ingresá tu número de WhatsApp para ver cuántos puntos acumulaste.</p>
+
+    <div class="puntos-form">
+      <input id="whatsappInput" type="text" placeholder="Ej: 3764123456">
+      <button id="consultarBtn">Consultar</button>
+    </div>
+
+    <div id="resultado" class="puntos-resultado"></div>
+
+    <div class="puntos-info">
+      <h3>✨ ¿Cómo funciona el sistema de puntos?</h3>
+      <ul>
+        <li>🛒 Por cada compra sumás el <strong>10% del valor</strong> en puntos.</li>
+        <li>💰 1 punto equivale a <strong>$1</strong>.</li>
+        <li>🎁 Podés canjear tus puntos por los productos que desees.</li>
+      </ul>
+    </div>
+
+    <div class="puntos-ejemplo">
+      <h3>📌 Ejemplo</h3>
+      <p>Si comprás por <strong>$8.500</strong>, acumulás <strong>$850 en puntos</strong> para tu próxima compra.</p>
+    </div>
   </div>
-  <div id="resultado" class="resultado"></div>
-  </section>
+</section>
+
 
   <section class="menu" id="menu">
     <h2>Menú</h2>
