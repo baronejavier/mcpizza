@@ -183,7 +183,7 @@ footer {
   font-size: 1.2rem;
 }
 
-.btn-whatsapp, .btn-pedidosya {
+.btn-direccion {
   display: inline-block;
   padding: 10px 20px;
   border-radius: 8px;
@@ -191,22 +191,22 @@ footer {
   text-decoration: none;
   font-weight: bold;
   transition: 0.3s;
-}
+  border: 3px solid rgb(255, 0, 0);
+} 
 
 .btn-whatsapp {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
   background-color: #25D366;
-}
+} 
 
 .btn-whatsapp:hover {
   background-color: #1ebe5b;
-}
-
-.btn-pedidosya {
-  background-color: #e60023;
-}
-
-.btn-pedidosya:hover {
-  background-color: #c5001e;
 }
 
 nav {
