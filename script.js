@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const formatear = n => "$" + n.toLocaleString("es-AR");
 
   function esHappyHour(h, m) {
-    return (h >= 20 && h <= 23) || (h === 0 && m <= 0);
+    return (h >= 21 && h <= 23) || (h === 0 && m <= 0);
   }
 
   function segundosHasta(hActual, mActual, sActual, hTarget, mTarget, sTarget) {
@@ -77,8 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
         mensajeEl.textContent = "¡Estamos en Happy Hour! 🎉 Pedí ahora — precios especiales hasta las 00:00.";
         segs = segundosHasta(h, m, s, 0, 0, 0);
       } else {
-        mensajeEl.textContent = "⏳ El Happy Hour comienza todos los días a las 20:00. ¡No te lo pierdas!";
-        segs = segundosHasta(h, m, s, 20, 0, 0);
+        mensajeEl.textContent = "⏳ El Happy Hour comienza todos los días a las 21:00. ¡No te lo pierdas!";
+        segs = segundosHasta(h, m, s, 21, 0, 0);
       }
 
       hh = Math.floor(segs / 3600);
