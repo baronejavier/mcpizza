@@ -29,6 +29,8 @@
   <input type="text" id="whatsappCompra" placeholder="Ej: 5493764217476" required>
   <label>Monto de la compra</label>
   <input type="number" id="montoCompra" placeholder="Ej: 8500" required>
+  <label>Número de WhatsApp del referido (opcional)</label>
+  <input type="text" id="whatsappReferido" placeholder="Ej: 5493764000000">
   <button type="submit">Sumar puntos</button>
 </form>
 
@@ -60,9 +62,7 @@
 let clientes = [];
 
 function cargarClientes() {
-  fetch('puntos.json?' + new Date().getTime(), {
-    cache: "no-store"
-  })
+  fetch('puntos.json?' + new Date().getTime(), { cache: "no-store" })
     .then(res => res.json())
     .then(data => {
       clientes = data;
@@ -88,30 +88,53 @@ function buscarCliente(whatsapp) {
   return clientes.find(c => c.whatsapp === whatsapp);
 }
 
+/* --- Lógica de sumar puntos (con referidos) --- */
 document.getElementById('formCompra').addEventListener('submit', function(e){
   e.preventDefault();
   const whatsapp = document.getElementById('whatsappCompra').value.trim();
   const monto = parseFloat(document.getElementById('montoCompra').value.trim());
+  const whatsappReferido = document.getElementById('whatsappReferido').value.trim();
 
   if (!whatsapp || isNaN(monto) || monto <= 0) {
     alert('Datos inválidos.');
     return;
   }
 
-  const puntosGanados = Math.floor(monto * 0.20);
+  const puntosCliente = Math.floor(monto * 0.20);
+  const puntosReferido = Math.floor(monto * 0.05);
 
   let cliente = buscarCliente(whatsapp);
-  if (cliente) {
-    cliente.puntos += puntosGanados;
-  } else {
-    cliente = { whatsapp: whatsapp, puntos: puntosGanados };
-    clientes.push(cliente);
-  }
+  let referido = whatsappReferido ? buscarCliente(whatsappReferido) : null;
 
-  actualizarTabla();
-  mostrarJSON();
+  if (!cliente) {
+    // Cliente nuevo → gana siempre 20%
+    cliente = { whatsapp: whatsapp, puntos: puntosCliente };
+    clientes.push(cliente);
+
+    // Si existe un referido válido, gana el 5%
+    if (referido) {
+      referido.puntos += puntosReferido;
+      actualizarTabla();
+      mostrarJSON();
+      alert(`✅ Cliente nuevo. Se sumaron ${puntosCliente} pts a ${whatsapp}.\n✅ Referido ${whatsappReferido} recibió ${puntosReferido} pts.\nSaldo referido ahora: ${referido.puntos} pts.`);
+      return;
+    } else {
+      actualizarTabla();
+      mostrarJSON();
+      alert(`✅ Cliente nuevo. Se sumaron ${puntosCliente} pts a ${whatsapp}.`);
+      return;
+    }
+  } else {
+    // Cliente ya existente → solo suma el 20%
+    cliente.puntos += puntosCliente;
+    actualizarTabla();
+    mostrarJSON();
+    alert(`✅ Cliente existente. Se sumaron ${puntosCliente} pts a ${whatsapp}.\nSaldo actual: ${cliente.puntos} pts.`);
+    return;
+  }
 });
 
+/* --- Lógica de restar puntos (verifica saldo) --- */
 document.getElementById('formCanje').addEventListener('submit', function(e){
   e.preventDefault();
   const whatsapp = document.getElementById('whatsappCanje').value.trim();
@@ -123,15 +146,25 @@ document.getElementById('formCanje').addEventListener('submit', function(e){
   }
 
   let cliente = buscarCliente(whatsapp);
-  if (cliente) {
-    cliente.puntos = Math.max(0, cliente.puntos - puntosRestar);
-    actualizarTabla();
-    mostrarJSON();
-  } else {
+  if (!cliente) {
     alert('Cliente no encontrado.');
+    return;
   }
+
+  // Si no hay saldo suficiente, no restamos y avisamos claramente
+  if (puntosRestar > cliente.puntos) {
+    alert(`❌ Saldo insuficiente.\nEl cliente ${whatsapp} tiene ${cliente.puntos} pts y no se puede restar ${puntosRestar} pts.`);
+    return;
+  }
+
+  // Resta válida
+  cliente.puntos -= puntosRestar;
+  actualizarTabla();
+  mostrarJSON();
+  alert(`✅ Se restaron ${puntosRestar} pts al cliente ${whatsapp}.\nSaldo actual: ${cliente.puntos} pts.`);
 });
 
+/* --- Mostrar JSON y copiar --- */
 function mostrarJSON() {
   document.getElementById('nuevoJSON').textContent =
     "Pegá este JSON en tu archivo puntos.json:\n" + JSON.stringify(clientes, null, 2);
@@ -140,10 +173,10 @@ function mostrarJSON() {
 document.getElementById('copiarJSON').addEventListener('click', function() {
   const jsonStr = JSON.stringify(clientes, null, 2);
   navigator.clipboard.writeText(jsonStr).then(() => {
-    alert('JSON copiado al portapapeles.');
+    alert('✅ JSON copiado al portapapeles.');
   }).catch(err => {
     console.error('Error copiando JSON:', err);
-    alert('Error copiando JSON.');
+    alert('❌ Error copiando JSON.');
   });
 });
 
