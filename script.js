@@ -132,7 +132,7 @@ document.getElementById('consultarBtn').addEventListener('click', () => {
     });
 });
 
-window.addEventListener("DOMContentLoaded", function() {
+function procesarNumero() {
   function getNumero() {
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.has("numero")) {
@@ -166,4 +166,9 @@ window.addEventListener("DOMContentLoaded", function() {
       seccion.scrollIntoView({ behavior: "smooth" });
     }
   }
-});
+}
+
+window.addEventListener("DOMContentLoaded", procesarNumero);
+
+window.addEventListener("hashchange", procesarNumero);
+window.addEventListener("popstate", procesarNumero);
