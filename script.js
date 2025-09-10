@@ -131,3 +131,39 @@ document.getElementById('consultarBtn').addEventListener('click', () => {
       resultado.className = "puntos-resultado error";
     });
 });
+
+window.addEventListener("DOMContentLoaded", function() {
+  function getNumero() {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has("numero")) {
+      return searchParams.get("numero");
+    }
+
+    const hash = window.location.hash;
+    if (hash.includes("?")) {
+      const hashQuery = hash.split("?")[1];
+      const hashParams = new URLSearchParams(hashQuery);
+      if (hashParams.has("numero")) {
+        return hashParams.get("numero");
+      }
+    }
+
+    return null;
+  }
+
+  const numero = getNumero();
+  if (numero) {
+    const input = document.getElementById("whatsappInput");
+    const btn = document.getElementById("consultarBtn");
+
+    if (input && btn) {
+      input.value = numero;
+      btn.click();
+    }
+
+    const seccion = document.getElementById("puntos");
+    if (seccion) {
+      seccion.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+});
