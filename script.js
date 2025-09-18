@@ -43,24 +43,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const inHH = esHappyHour(h, m);
 
     precios.forEach(precioEl => {
-      if (!precioEl.hasAttribute("data-precio")) {
-        const precioOriginal = parsearPrecio(precioEl.textContent);
-        if (!isNaN(precioOriginal)) precioEl.setAttribute("data-precio", String(precioOriginal));
-      }
+  if (!precioEl.hasAttribute("data-precio")) {
+    const precioOriginal = parsearPrecio(precioEl.textContent);
+    if (!isNaN(precioOriginal)) precioEl.setAttribute("data-precio", String(precioOriginal));
+  }
 
-      const precioBase = parseInt(precioEl.getAttribute("data-precio") || "", 10);
-      if (isNaN(precioBase)) return;
+  const precioBase = parseInt(precioEl.getAttribute("data-precio") || "", 10);
+  if (isNaN(precioBase)) return;
 
-      precioEl.innerHTML = "";
+  precioEl.innerHTML = "";
 
-      if (inHH) {
+  if (inHH) {
     let aumento = Math.ceil((precioBase * 1.4) / 500) * 500;
-    precioEl.innerHTML = `<span style="text-decoration: line-through; opacity:0.7; margin-right:5px">${formatear(aumento)}</span><span style="font-weight:bold; color:#00ff00">${formatear(precioBase)}</span>`;
-    } else {
+    precioEl.innerHTML = `
+      <span style="text-decoration: line-through; opacity:0.7; margin-right:5px">
+        ${formatear(aumento)}
+      </span>
+      <span style="font-weight:bold; color:#00ff00">
+        ${formatear(precioBase)}
+      </span>`;
+  } else {
     let nuevo = Math.ceil((precioBase * 1.4) / 500) * 500;
-    precioEl.textContent = formatear(nuevo);
-    }
-    });
+    precioEl.innerHTML = `
+      ${formatear(nuevo)}
+      <br>
+      <small style="color:#ff6600">🎉 Eventos: ${formatear(precioBase)}</small>
+    `;
+  }
+});
+
    }
 
   function actualizarContador() {
